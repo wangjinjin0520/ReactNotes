@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div id = "test"></div>
+<div id = "test1"></div>
+
+<script type="text/javascript" src="js/babel.min.js"></script>
+<script type="text/javascript" src="js/react.development.js"></script>
+<script type="text/javascript" src="js/react-dom.development.js"></script>
+<script type="text/javascript" src="js/prop-types.js"></script>
+<script type="text/babel">
+    //组件内容：姓名，年龄，性别（年龄未指定则默认18，性别则默认是男）
+    //1.定义组件
+    //相当于接收到人的信息然后显示出来（和IMG的思想一样），不需要用到组件的状态，并且每个组件的状态都是一样的，所以可以用函数的方法创建
+    // function Person(props){    //此时props接收到的是一个对象
+    //     return(
+    //         <ul>
+    //             <li>姓名:{props.name}</li>
+    //             <li>年龄:{props.age}</li>
+    //             <li>性别:{props.sex}</li>
+    //         </ul>
+    //     )
+    // }
+    //用类创建组件
+    //此时必须用this来表示组件对象，props是对象的属性，属性的类型是对象
+    //用class创建的组件不需要参数接收（函数方式创建的需要），直接通过this.props访问即可，this表示当前类的实例对象
+    //无论是class创建的组件，还是构造函数创造的组件，其props参数都是只读的，不可修改的
+    class Person extends React.Component{
+        render(){
+           // console.log(this);
+            return(
+                <ul>
+                    <li>姓名:{this.props.name}</li>
+                    <li>年龄:{this.props.age}</li>
+                    <li>性别:{this.props.sex}</li>
+                </ul>
+            )
+        }
+    }
+    //指定组件的默认值
+    Person.defaultProps = {
+        sex: '男',
+        age:18
+    }
+    //指定属性值的类型和必要性（如属性姓名必须认为指定）
+    Person.propTypes = {
+        name:PropTypes.string.isRequired,
+        age: PropTypes.number,
+        sex:PropTypes.string
+    }
+
+    //2.渲染组件
+    const P1 = {
+        name:'TOM',
+        age:23,
+        sex:'女'
+    }
+    const P2 = {
+        name:'JACK',
+        // age:20,
+        // sex:'男'
+    }
+
+    //假如有这样的两个对象，想要吧o2的属性，添加到o1上去，就可以使用es6中出现的...展开符
+
+/*
+    let o2 = {
+        age:12,
+        sex:"男",
+        phone:123456
+    }
+    let o1 = {
+        name: 'SAM',
+        ...o2
+    }
+    console.log(o1);
+*/
+
+    //props属性：用于给组件传递数据（通过属性绑定的方式）
+    //！！！props传递的属性值是只读的不可更改的
+    //给组件传递参数在渲染组件时，放在标签的内部，当成实参传递
+
+    ReactDOM.render(<Person name={P1.name} age = {P1.age} sex = {P1.sex}/>,document.getElementById("test"));
+    ReactDOM.render(<Person {...P2}/>,document.getElementById("test1"));
+//...是es6中的展开运算符
+    /*
+    ...的作用：
+    1.打包
+        function fn(...as) = {}
+        fn(1,2,3)
+    2.解包（如上）
+        const arr1 = [2,3,4]
+        const arr2 = [1, ...arr1 ,5]
+    */
+</script>
+</body>
+</html>

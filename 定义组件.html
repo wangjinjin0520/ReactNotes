@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id = "MyComponent"></div>
+<div id = "MyComponent1"></div>
+<div id = "MyComponent2"></div>
+<script type="text/javascript" src="js/babel.min.js"></script>
+<script type="text/javascript" src="js/react.development.js"></script>
+<script type="text/javascript" src="js/react-dom.development.js"></script>
+
+<script type="text/babel">
+    //1.定义组件
+    //方式一：工厂函数组件（简单组件）
+    //组件用到状态的时候不能用工厂函数的方式
+    //利用构造函数创建组件时首字母大写，并且不要忘记return一个状态
+    //在组件不渲染内部时候，直接return null
+    //总之，在函数中，必须返回一个合法的jsx 虚拟DOM元素
+    function MyComponent() {
+        return <h2>工厂函数组件（简单组件）</h2>;
+    }
+
+    const MyComponent1 = () =>  {
+        return <h2>工厂函数组件（简单组件) 的箭头函数表示</h2>;
+    }
+    //方式二：ES6类组件（复杂组件）
+    class MyComponent2 extends React.Component{
+        render(){
+            return <h2>ES6类组件（复杂组件）</h2>;
+        }
+    }
+    //2.渲染组件标签
+    //一但创建了一个组件，就可以直接通过标签来调用这个组件
+    ReactDOM.render(<MyComponent />,document.getElementById("MyComponent"));
+    ReactDOM.render(<MyComponent1 />,document.getElementById("MyComponent1"));
+    ReactDOM.render(<MyComponent2 />,document.getElementById("MyComponent2"));
+
+    /*
+    两种创建组件的方法的比较：
+    i）使用class创建的组件，有自己的私有数据和生命周期函数,有state也有props（有状态组件）
+    ii）使用func创建的组件，没有自己的私有数据和生命周期函数，只有props（无状态组件）
+
+    因此，选择创建组件的标准是：组件是否需要有自己的私有数据
+
+    props中的数据都是外界或者父组件传递过来的，而state中的数据都是组建自己本身私有的（更多都是通过AJAX获取得到）
+    props中的数据都是只读的，不可赋值；state中的数据都是可读可写的
+
+    */
+</script>
+</body>
+</html>

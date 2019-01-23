@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id = "block"></div>
+
+<script type="text/javascript" src="js/babel.min.js"></script>
+<script type="text/javascript" src="js/react.development.js"></script>
+<script type="text/javascript" src="js/react-dom.development.js"></script>
+<script type="text/javascript" src="js/prop-types.js"></script>
+
+<script type="text/babel">
+    class MyComponent extends React.Component{
+        render(){
+            return(
+                <div>
+                    <label>用户名:</label>
+                    <input type="text" ref="username"/>
+                    <label>密码:</label>
+                    <input type="password" ref="password"/>
+                    <button onClick={this.showMsg}>登录</button>
+                </div>
+            )
+        }
+        constructor(props){
+            super(props);
+            this.showMsg = this.showMsg.bind(this)
+        }
+        showMsg(){
+            const name = this.refs.username.value;
+            const password = this.refs.password.value;
+            alert("用户名：" + name + "密码：" + password)
+        }
+    }
+    ReactDOM.render(<MyComponent/>,document.getElementById("block"));
+</script>
+</body>
+</html>

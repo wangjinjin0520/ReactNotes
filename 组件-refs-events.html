@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id = "data"></div>
+
+<script type="text/javascript" src="js/babel.min.js"></script>
+<script type="text/javascript" src="js/react.development.js"></script>
+<script type="text/javascript" src="js/react-dom.development.js"></script>
+<script type="text/babel">
+
+    //1.定义组件
+    class MyComponent extends React.Component{
+        //初始化组件
+        constructor(props){
+            super(props) ;     //调用父类的方法
+            this.showText = this.showText.bind(this);
+            this.handleBlur = this.handleBlur.bind(this);
+        }
+
+        //自定义的方法使用之前要重新改掉this的指向
+        showText(){
+            //先获取文本框中的内容
+            const input = this.refs.content;
+            // alert(input.value)
+            alert(this.input.value)
+        }
+        handleBlur(event){       //target属性表示触发事件的节点
+            alert(event.target.value);
+        }
+
+
+
+        render(){
+            return(
+                <div>
+                    <input type="text" ref="content"/>&nbsp;&nbsp;
+                    <input type="text"  ref={function(inp) {
+                        this.input=inp;
+                    }.bind(this)}/>&nbsp;&nbsp;
+                    <button onClick={this.showText}>提示输入</button>&nbsp;&nbsp;
+                    <input type="text" placeholder="失去焦点提示内容" onBlur={this.handleBlur}/>
+                </div>
+            )
+        }
+    }
+    //2.渲染组件标签
+    ReactDOM.render(<MyComponent />,document.getElementById("data"));
+</script>
+</body>
+</html>
